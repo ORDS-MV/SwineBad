@@ -21,6 +21,6 @@ get_wikidata_url <- function(place_id) {
   return(wikidata_url)
 }
 
-#coordinates %>%
-#  rowwise() %>%
-#  summarise_all(list(place_id=get_place_id(Ort), ))
+# coordinates %>%
+#   rowwise() %>%
+#   summarise(place_id=get_place_id(Ort))

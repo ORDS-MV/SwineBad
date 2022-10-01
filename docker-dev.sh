@@ -1,8 +1,8 @@
 #!/bin/bash
 
-docker run --rm -ti \
-    -e USERID=$(id -u) \
-    -e GROUPID=$(id -g) \
+docker build --tag=swinebad:latest .
+docker run --rm \
     -p 127.0.0.1:8787:8787 \
-    -v "$(pwd)":/home/rstudio/SwineBad \
-    rocker/geospatial:4.2.1
+    -v "$PWD":/home/rstudio/SwineBad \
+    --name=SwineBad \
+    swinebad:latest
