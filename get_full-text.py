@@ -10,10 +10,11 @@ import xml.etree.ElementTree as ET
 # if all full texts are available, these information might be generated automatically from:
 # https://www.digitale-bibliothek-mv.de/viewer/sourcefile?id=PPN636776093
 METS_FULL_TEXT = [
-    'https://www.digitale-bibliothek-mv.de/viewer/metsresolver?id=PPN636776093_1910',
-    'https://www.digitale-bibliothek-mv.de/viewer/metsresolver?id=PPN636776093_1915',
-    'https://www.digitale-bibliothek-mv.de/viewer/metsresolver?id=PPN636776093_1926',
-    'https://www.digitale-bibliothek-mv.de/viewer/metsresolver?id=PPN636776093_1928'
+    # 'https://www.digitale-bibliothek-mv.de/viewer/metsresolver?id=PPN636776093_1910',
+    # 'https://www.digitale-bibliothek-mv.de/viewer/metsresolver?id=PPN636776093_1915',
+    # 'https://www.digitale-bibliothek-mv.de/viewer/metsresolver?id=PPN636776093_1926',
+    'https://www.digitale-bibliothek-mv.de/viewer/sourcefile?id=PPN636776093_1927',
+    # 'https://www.digitale-bibliothek-mv.de/viewer/metsresolver?id=PPN636776093_1928'
 ]
 
 for url in METS_FULL_TEXT:
