@@ -26,7 +26,7 @@ ui <- fluidPage(
     # Application title
     titlePanel("Kulturhackathon 2022 - Projekt Badeanzeiger"),
     sliderInput("date", "date of arrival:", 
-                min = 1910, max = 1932, value=1920, sep = ""),
+                min = 1910, max = 1932, value=1920, sep = "",, animate = TRUE),
     plotOutput("Plotyplot")
 )
 
