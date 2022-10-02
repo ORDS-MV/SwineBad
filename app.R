@@ -17,8 +17,11 @@ df %>%
 
 # Download data from https://hub.arcgis.com/datasets/ae25571c60d94ce5b7fcbf74e27c00e0/about
 
-germany <- readOGR("./vg2500_geo84/vg2500_bld.shp", use_iconv = TRUE, encoding = "UTF-8")
-germany_tab <- broom::tidy(germany)
+st_read("./europe/Europe.shp") %>%
+  st_transform(crs = '+proj=aeqd +lat_0=53.6 +lon_0=12.7') %>%
+  st_simplify(preserveTopology = FALSE, dTolerance = 10000) ->
+  europa
+  
 
 if (interactive()) {
   
@@ -36,18 +39,14 @@ server <- function(input, output) {
       data$year <- format(as.Date(data$Datum, format="%d/%m/%Y"),"%Y")
       data1 <- data[data$year==input$date,]
       
-      ggplot() +
-        geom_polygon(data = germany_tab,
-                     aes(x = long, y = lat, group = group),
-                     fill = "white",
-                     colour = "gray80") +
+      ggplot(europa)+
+        geom_sf() + 
+        annotate("point", y=53.916667,x=14.25, colour = "red", size = 1) +
         geom_segment(data=data1,color="#d73027",
                      aes(xend=sw_long, yend=sw_lat, x = longitude, y = latitude),
                      arrow = arrow(length = unit(3, "mm"))) + 
-        geom_point(data = data1,
-                   aes(x = longitude, y = latitude))+
-        theme_minimal()+
-        coord_map()
+        coord_sf(xlim = c(0, 30), ylim = c(40, 60), expand = FALSE, crs = 4326) +
+        theme_minimal()
       })
 }
 
