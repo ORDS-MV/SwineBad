@@ -32,7 +32,7 @@ ui <- fluidPage(
     img(src = "Swinemuende_vor_100_Jahren.jpg", height=200),
     img(src = "Badanzeiger_Titelpage.png", height=200),
     sliderInput("date", "date of arrival:",
-                min =as.Date("1910-01-01","%Y-%m-%d"),
+                min =as.Date("1910-06-06","%Y-%m-%d"),
                 max =as.Date("1932-12-31","%Y-%m-%d"),
                 value=as.Date("1910-01-01"),
                 timeFormat="%Y-%m-%d",
