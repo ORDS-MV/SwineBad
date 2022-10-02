@@ -8,7 +8,10 @@ library(lubridate)
 library(sf)
 
 df <- read_csv("data2.csv")
-coord <- read_csv("coord.csv")
+coord <- read_csv("coords2.csv")
+coord <- coord %>%
+  rename(longitude=lon) %>% 
+  rename(latitude=lat)
 
 df %>%
   left_join(coord, by=c("Wohnort"="Ort")) %>%
@@ -34,7 +37,7 @@ ui <- fluidPage(
     sliderInput("date", "date of arrival:",
                 min =as.Date("1910-06-06","%Y-%m-%d"),
                 max =as.Date("1932-12-31","%Y-%m-%d"),
-                value=as.Date("1910-01-01"),
+                value=as.Date("1910-06-06"),
                 timeFormat="%Y-%m-%d",
                 animate = TRUE),
     plotOutput("Plotyplot"),
@@ -57,7 +60,8 @@ server <- function(input, output) {
         coord_sf(xlim = c(0, 30), ylim = c(40, 60), expand = FALSE, crs = 4326) +
         theme_minimal()+
         theme(axis.title.x=element_blank(),
-              axis.title.y=element_blank())
+              axis.title.y=element_blank(),
+              panel.background = element_rect(fill="lightblue"))
       })
 }
 
