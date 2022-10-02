@@ -27,12 +27,16 @@ st_read("./europe/Europe.shp") %>%
 if (interactive()) {
   
 ui <- fluidPage(
-    #setBackgroundColor("ghostwhite")
+
     titlePanel("Kulturhackathon 2022 - Projekt SwineBad"),
     img(src = "Swinemuende_vor_100_Jahren.jpg", height=200),
     img(src = "Badanzeiger_Titelpage.png", height=200),
-    sliderInput("date", "date of arrival:", 
-                min = 1910, max = 1932, value=1910, sep = "",animate = TRUE),
+    sliderInput("date", "date of arrival:",
+                min =as.Date("1910-01-01","%Y-%m-%d"),
+                max =as.Date("1932-12-31","%Y-%m-%d"),
+                value=as.Date("1910-01-01"),
+                timeFormat="%Y-%m-%d",
+                sep = "",animate = TRUE),
     plotOutput("Plotyplot"),
     img(src = "KH_code_expedition.png", height=100),
     img(src = "ords-sticker-hex-mv.png", height=100),
@@ -41,8 +45,8 @@ ui <- fluidPage(
 server <- function(input, output) {
     output$Plotyplot <- renderPlot({
       
-      data$year <- format(as.Date(data$Datum, format="%d/%m/%Y"),"%Y")
-      data1 <- data[data$year==input$date,]
+#      data$year <- format(as.Date(data$Datum, format="%Y-%m-%d"),"%Y")
+      data1 <- data[data$Datum==input$date,]
       
       ggplot(europa)+
         geom_sf() + 
