@@ -36,7 +36,6 @@ ui <- fluidPage(
                 max =as.Date("1932-12-31","%Y-%m-%d"),
                 value=as.Date("1910-01-01"),
                 timeFormat="%Y-%m-%d",
-                #sep = "",
                 animate = TRUE),
     plotOutput("Plotyplot"),
     img(src = "KH_code_expedition.png", height=100),
@@ -56,7 +55,9 @@ server <- function(input, output) {
                      aes(xend=sw_long, yend=sw_lat, x = longitude, y = latitude),
                      arrow = arrow(length = unit(3, "mm"))) + 
         coord_sf(xlim = c(0, 30), ylim = c(40, 60), expand = FALSE, crs = 4326) +
-        theme_minimal()
+        theme_minimal()+
+        theme(axis.title.x=element_blank(),
+              axis.title.y=element_blank())
       })
 }
 
