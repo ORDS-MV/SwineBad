@@ -7,7 +7,7 @@ library(gganimate)
 library(lubridate)
 library(sf)
 
-df <- read_csv("data.csv")
+df <- read_csv("data2.csv")
 coord <- read_csv("coord.csv")
 
 df %>%
@@ -49,7 +49,7 @@ server <- function(input, output) {
       data1 <- data[data$Datum==input$date,]
       
       ggplot(europa)+
-        geom_sf() + 
+        geom_sf(fill="beige") + 
         annotate("point", y=53.916667,x=14.25, colour = "red", size = 1) +
         geom_segment(data=data1,color="#d73027",
                      aes(xend=sw_long, yend=sw_lat, x = longitude, y = latitude),
