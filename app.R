@@ -5,6 +5,7 @@ library(rgdal)
 library(gifski)
 library(gganimate)
 library(lubridate)
+library(sf)
 
 df <- read_csv("data.csv")
 coord <- read_csv("coord.csv")
@@ -26,11 +27,15 @@ st_read("./europe/Europe.shp") %>%
 if (interactive()) {
   
 ui <- fluidPage(
-    # Application title
-    titlePanel("Kulturhackathon 2022 - Projekt Badeanzeiger"),
+    #setBackgroundColor("ghostwhite")
+    titlePanel("Kulturhackathon 2022 - Projekt SwineBad"),
+    img(src = "Swinemuende_vor_100_Jahren.jpg", height=200),
+    img(src = "Badanzeiger_Titelpage.png", height=200),
     sliderInput("date", "date of arrival:", 
-                min = 1910, max = 1932, value=1920, sep = "",animate = TRUE),
-    plotOutput("Plotyplot")
+                min = 1910, max = 1932, value=1910, sep = "",animate = TRUE),
+    plotOutput("Plotyplot"),
+    img(src = "KH_code_expedition.png", height=100),
+    img(src = "ords-sticker-hex-mv.png", height=100),
 )
 
 server <- function(input, output) {
