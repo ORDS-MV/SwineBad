@@ -7,8 +7,11 @@ library(gganimate)
 library(lubridate)
 library(sf)
 
-df <- read_csv("data.csv")
-coord <- read_csv("coord.csv")
+df <- read_csv("data2.csv")
+coord <- read_csv("coords2.csv")
+coord <- coord %>%
+  rename(longitude=lon) %>% 
+  rename(latitude=lat)
 
 df %>%
   left_join(coord, by=c("Wohnort"="Ort")) %>%
@@ -27,12 +30,16 @@ st_read("./europe/Europe.shp") %>%
 if (interactive()) {
   
 ui <- fluidPage(
-    #setBackgroundColor("ghostwhite")
+
     titlePanel("Kulturhackathon 2022 - Projekt SwineBad"),
     img(src = "Swinemuende_vor_100_Jahren.jpg", height=200),
     img(src = "Badanzeiger_Titelpage.png", height=200),
-    sliderInput("date", "date of arrival:", 
-                min = 1910, max = 1932, value=1910, sep = "",animate = TRUE),
+    sliderInput("date", "date of arrival:",
+                min =as.Date("1910-06-06","%Y-%m-%d"),
+                max =as.Date("1932-12-31","%Y-%m-%d"),
+                value=as.Date("1910-06-06"),
+                timeFormat="%Y-%m-%d",
+                animate = TRUE),
     plotOutput("Plotyplot"),
     img(src = "KH_code_expedition.png", height=100),
     img(src = "ords-sticker-hex-mv.png", height=100),
@@ -41,17 +48,20 @@ ui <- fluidPage(
 server <- function(input, output) {
     output$Plotyplot <- renderPlot({
       
-      data$year <- format(as.Date(data$Datum, format="%d/%m/%Y"),"%Y")
-      data1 <- data[data$year==input$date,]
+#      data$year <- format(as.Date(data$Datum, format="%Y-%m-%d"),"%Y")
+      data1 <- data[data$Datum==input$date,]
       
       ggplot(europa)+
-        geom_sf() + 
+        geom_sf(fill="beige") + 
         annotate("point", y=53.916667,x=14.25, colour = "red", size = 1) +
         geom_segment(data=data1,color="#d73027",
                      aes(xend=sw_long, yend=sw_lat, x = longitude, y = latitude),
                      arrow = arrow(length = unit(3, "mm"))) + 
         coord_sf(xlim = c(0, 30), ylim = c(40, 60), expand = FALSE, crs = 4326) +
-        theme_minimal()
+        theme_minimal()+
+        theme(axis.title.x=element_blank(),
+              axis.title.y=element_blank(),
+              panel.background = element_rect(fill="lightblue"))
       })
 }
 
