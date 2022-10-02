@@ -7,15 +7,16 @@ library(gganimate)
 library(lubridate)
 library(sf)
 
-df <- read_csv("data2.csv")
+df <- read_csv("final_data.csv")
 coord <- read_csv("coords2.csv")
 coord <- coord %>%
   rename(longitude=lon) %>% 
   rename(latitude=lat)
 
 df %>%
-  left_join(coord, by=c("Wohnort"="Ort")) %>%
+  left_join(coord, by=c("Ort"="Ort")) %>%
   mutate(sw_lat=53.916667,sw_long=14.25) %>%
+  mutate(Datum=as.Date(Datum)) %>% 
   mutate(year=year(Datum))->
   data
 
